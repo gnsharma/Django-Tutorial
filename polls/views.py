@@ -6,6 +6,13 @@ from django.utils import timezone
 
 from .models import Question, Choice 
 
+class HomePageView(generic.base.TemplateView):
+    template_name = 'polls/home.haml'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
+
 class IndexView(generic.ListView):
     template_name = 'polls/index.haml'
     context_object_name = 'latest_question_list'
@@ -49,4 +56,4 @@ def vote(request, question_id):
         selected_choice.votes += 1
         selected_choice.save()
         return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))        
-
+vote.alters_data=True

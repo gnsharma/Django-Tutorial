@@ -1,0 +1,17 @@
+!!!
+{% load static %}
+%link{:rel => "stylesheet", :type => "text/css", :href => "{% static 'polls/style.css' %}" }
+%html{:lang => "en"}
+%head
+    %title {% block title %}Home Page {% endblock %}
+
+%body
+    #sidebar
+        {% block sidebar %}
+        %ul
+            %li
+                %a{:href => "/polls"}Polls
+        {% endblock %}
+
+    #content
+        {% block content %} {% endblock %}
