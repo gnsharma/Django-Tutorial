@@ -4,14 +4,16 @@ from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
 
-from .models import Question, Choice 
+from .models import Question, Choice
+
 
 class HomePageView(generic.base.TemplateView):
     template_name = 'polls/home.haml'
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         return context
+
 
 class IndexView(generic.ListView):
     template_name = 'polls/index.haml'
@@ -22,26 +24,28 @@ class IndexView(generic.ListView):
             pub_date__lte=timezone.now()
         ).order_by('-pub_date')[:5]
 
+
 class DetailView(generic.DetailView):
     model = Question
     template_name = 'polls/detail.haml'
-    
-    def  get_queryset(self):
+
+    def get_queryset(self):
         """
         Excludes any questions that aren't published yet.
         """
         return Question.objects.filter(pub_date__lte=timezone.now())
-    
-        
+
+
 class ResultsView(generic.DetailView):
     model = Question
     template_name = 'polls/results.haml'
-    
-    def  get_queryset(self):
+
+    def get_queryset(self):
         """
         Excludes any questions that aren't published yet.
         """
         return Question.objects.filter(pub_date__lte=timezone.now())
+
 
 def vote(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
@@ -55,5 +59,7 @@ def vote(request, question_id):
     else:
         selected_choice.votes += 1
         selected_choice.save()
-        return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))        
-vote.alters_data=True
+        return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+
+
+vote.alters_data = True

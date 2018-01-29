@@ -21,6 +21,6 @@ from polls.views import HomePageView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('polls/', include('polls.urls')),   
+    path('polls/', include('polls.urls')),
     path('', HomePageView.as_view(), name='home')
 ]
