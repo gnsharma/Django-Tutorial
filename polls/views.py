@@ -5,7 +5,20 @@ from django.views import generic
 from django.utils import timezone
 
 from .models import Question, Choice
+from .forms import QuestionForm
 
+def add_question(request):
+    if request.method == 'POST':
+        form = QuestionForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('polls'))
+
+    else:
+        form = QuestionForm()
+    
+    return render(request, 'polls/add_question.haml', {'form': form})
+    
 
 class HomePageView(generic.base.TemplateView):
     template_name = 'polls/home.haml'
