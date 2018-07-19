@@ -127,6 +127,7 @@ class QuestionResultsViewTests(TestCase):
 
     def test_past_question(self):
         """
+{% comment %}
         The detail view of a question with a pub_date in the past
         displays the question's text.
         """
